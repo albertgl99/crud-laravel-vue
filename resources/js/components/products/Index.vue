@@ -98,12 +98,6 @@ const deleteProduct = (id) => {
                     <div class="relative w-full">
                         <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-4 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search branch name..." v-model="searchQuery" />
                     </div>
-                    <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
-                        <span class="sr-only">Search</span>
-                    </button>
                 </form>
           </div>
   
@@ -114,8 +108,8 @@ const deleteProduct = (id) => {
                   Product
               </p>
               <p class="table--heading--col4">Type</p>
-              <p class="table--heading--col3">
-                  Inventory
+              <p class="table--heading--col6">
+                  Price
               </p>
               <!-- <p class="table--heading--col5">&#32;</p> -->
               <p class="table--heading--col5">actions</p>
@@ -137,13 +131,13 @@ const deleteProduct = (id) => {
               </p>     
               <div>     
                   <button @click="onEdit(product.id)">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-black items-center" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-black items-center hover:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
                     </svg>
 
                   </button>
                   <button class="pl-4" @click="deleteProduct(product.id)">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-black hover:text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                     </svg>
 
@@ -152,7 +146,7 @@ const deleteProduct = (id) => {
           </div>
 
 
-<div class="flex items-end justify-end border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+<div class="flex border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
   <div class="flex flex-1 justify-between sm:hidden">
     <a href="#" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
     <a href="#" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
