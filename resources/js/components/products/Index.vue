@@ -118,7 +118,7 @@ const deleteProduct = (id) => {
           <!-- product 1 -->
           <div class="table--items products__list__item"  v-for="product in products" :key="product.id">
               <div class="products__list__item--imgWrapper">
-                  <img :src="ourImage(product.image)" class="products__list__item--img" src="/public/upload/1.jpg"  style="height: 40px;">
+                  <img :src="ourImage(product.image)" class="products__list__item--img"  style="height: 40px;">
               </div>
               <a href="# " class="table--items--col2">
                   {{ product.name}}
