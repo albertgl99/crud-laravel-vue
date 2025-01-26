@@ -19,9 +19,14 @@ onMounted(() => {
 })
 
 const getProduct = async () => {
-    let response = await axios.get('/api/products/${route.params.id}/edit')
+    let response = await axios.get(`/api/products/${route.params.id}/edit`)
     .then((response) => {
         form.name = response.data.product.name
+        form.description = response.data.product.description
+        form.image = response.data.product.image
+        form.type = response.data.product.type
+        form.quantity = response.data.product.quantity
+        form.price = response.data.product.price
     })
 }
 
@@ -58,11 +63,33 @@ const handleFileChange = (e) => {
     reader.readAsDataURL(file)
 }
 
-const handleSave = () => {
+const handleSave = (values, actions) => {
+    
+    if(editMode.value){
+        updateProduct(values, actions)
+    }else{
+        createProduct(values, actions)
+    }
+}
+
+const createProduct = (values, actions) => {
     axios.post('/api/products', form)
     .then((response) => {
         router.push('/')
         toast.fire({ icon: "success", title: "Product Added Successfully"})
+    })
+    .catch((error) => {
+        if(error.response.status === 422){
+            errors.value = error.response.data.errors
+        }
+    })
+}
+
+const updateProduct = (values, actions) => {
+    axios.put(`/api/products/${route.params.id}`, form)
+    .then((response) => {
+        router.push('/')
+        toast.fire({ icon: "success", title: "Product Updated Successfully"})
     })
     .catch((error) => {
         if(error.response.status === 422){
