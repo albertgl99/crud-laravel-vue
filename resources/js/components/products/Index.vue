@@ -2,78 +2,95 @@
 import { onMounted, ref, watch } from "vue"
 import { useRouter } from "vue-router"
 
+// Inicializa el router para la navegación entre páginas.
 const router = useRouter()
 
-let products = ref([])
+// Variables reactivas para almacenar productos, enlaces de paginación y la consulta de búsqueda.
+let products = ref([]) // Lista de productos.
+let links = ref([]) // Enlaces de paginación.
+let searchQuery = ref('') // Consulta de búsqueda actual.
 
-let links = ref([])
-
-let searchQuery = ref('')
-
+// Ejecuta la función getProducts al montar el componente.
 onMounted(async () => {
-    getProducts()
+    getProducts() // Llama a la API para obtener productos al cargar la página.
 })
 
+// Observa cambios en searchQuery y llama a getProducts para actualizar la lista.
 watch(searchQuery, () => {
-    getProducts()
+    getProducts() // Actualiza la lista de productos cuando cambia la consulta.
 })
 
+// Redirige al usuario a la página para crear un nuevo producto.
 const newProduct = () => {
-    router.push('/products/create')
+    router.push('/products/create') // Navega a la ruta para agregar un producto.
 }
 
+// Construye la URL de la imagen del producto.
 const ourImage = (img) => {
-    return "/upload/"+img
+    return "/upload/" + img // Devuelve la ruta completa de la imagen.
 }
 
+// Obtiene la lista de productos de la API.
 const getProducts = async () => {
-    let response = await axios.get ('/api/products?&searchQuery='+searchQuery.value)
-    .then((response) => {
-        products.value = response.data.products.data
-        links.value = response.data.products.links
-    })
+    let response = await axios.get('/api/products?&searchQuery=' + searchQuery.value)
+        .then((response) => {
+            products.value = response.data.products.data // Almacena los productos obtenidos.
+            links.value = response.data.products.links // Almacena los enlaces de paginación.
+        })
+        .catch((error) => {
+            console.error(error) // Manejo de errores en la consola.
+        })
 }
 
+// Cambia de página utilizando los enlaces de paginación.
 const changePage = (link) => {
-    if(!link.url || link.active){
-        return
+    if (!link.url || link.active) {
+        return // Si no hay URL o ya está activa, no hace nada.
     }
 
     axios.get(link.url)
         .then((response) => {
-            products.value = response.data.products.data
-            links.value = response.data.products.links
+            products.value = response.data.products.data // Actualiza los productos.
+            links.value = response.data.products.links // Actualiza los enlaces.
+        })
+        .catch((error) => {
+            console.error(error) // Manejo de errores en la consola.
         })
 }
 
+// Redirige al usuario a la página de edición de un producto específico.
 const onEdit = (id) => {
-    router.push(`/products/${id}/edit`)
+    router.push(`/products/${id}/edit`) // Navega a la ruta de edición con el ID del producto.
 }
 
+// Elimina un producto después de confirmar la acción.
 const deleteProduct = (id) => {
     Swal.fire({
-  title: "Are you sure?",
-  text: "You won't be able to revert this!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, delete it!"
-}).then((result) => {
-  if (result.isConfirmed) {
-    axios.delete(`/api/products/${id}`)
-    .then(() => {
-        Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-        });
-        getProducts()
-    });
-  }
-});
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Llama a la API para eliminar el producto.
+            axios.delete(`/api/products/${id}`)
+                .then(() => {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    })
+                    getProducts() // Actualiza la lista después de la eliminación.
+                })
+                .catch((error) => {
+                    console.error(error) // Manejo de errores en la consola.
+                })
+        }
+    })
 }
-
 </script>
 
 <template>
