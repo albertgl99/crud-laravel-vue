@@ -52,7 +52,7 @@ class ProductController extends Controller
             $sub = substr($request->image, 0, $strpos); // Extrae la información antes del delimitador.
             $ex = explode('/', $sub)[1]; // Obtiene la extensión de la imagen.
             $name = time() . "." . $ex; // Genera un nombre único para la imagen.
-            $img = Image::make($request->image)->resize(200, 200); // Redimensiona la imagen a 200x200 px.
+            $img = Image::read($request->image)->resize(200, 200); // Redimensiona la imagen a 200x200 px.
             $upload_path = public_path() . "/upload/"; // Define la ruta de subida.
             $img->save($upload_path . $name); // Guarda la imagen en el servidor.
             $product->image = $name; // Almacena el nombre de la imagen en la base de datos.
